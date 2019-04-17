@@ -8,7 +8,7 @@ matrix:
 
   # Builds with wasm-pack.
   - rust: beta
-    before_insall:
+    before_install:
       - nvm install latest
     before_script:
       - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
