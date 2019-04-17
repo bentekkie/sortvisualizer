@@ -1,0 +1,23 @@
+language: rust
+sudo: false
+
+cache: cargo
+
+matrix:
+  include:
+
+  # Builds with wasm-pack.
+  - rust: beta
+    before_script:
+      - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
+    script:
+      - wasm-pack build
+      
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  on:
+    branch: master
+
