@@ -12,7 +12,11 @@ matrix:
       - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
     script:
       - wasm-pack build
-      
+  - node_js: node
+    before_script:
+      - cd pkg
+      - npm link
+
 deploy:
   provider: pages
   skip_cleanup: true
