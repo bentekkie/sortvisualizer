@@ -1,7 +1,8 @@
 language: rust
 sudo: false
-
-cache: cargo
+cache:
+  yarn: true
+  cargo: true
 
 matrix:
   include:
@@ -16,7 +17,7 @@ matrix:
     script:
       - wasm-pack build
       - cd pkg && yarn link
-      - cd www && yarn link "sortvisualizer" && yarn && yarn build
+      - cd ../www && yarn link "sortvisualizer" && yarn && yarn build
 
 deploy:
   provider: pages
