@@ -1,0 +1,12 @@
+.processing {
+    background-color: red
+}
+
+html, body, #root, .container {
+    height: 100%
+}
+
+.container {
+    flex-direction: column;
+    display: flex;
+}
