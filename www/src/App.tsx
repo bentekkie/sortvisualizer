@@ -36,7 +36,8 @@ export class App extends Component<{}, IState>{
         this.setState({ running: true }, async () => {
             for(const {array,swap} of run_sort(this.state.array, this.state.sortType)){
                 if(!this.state.running) break;
-                this.setState(prev => {prevArray:prev.array,array,swap})
+                console.log(array);
+                this.setState(prev => ({prevArray:prev.array,array,swap}))
                 await delay(this.state.delay)
             }
             this.setState({running: false,swap:[-1,-1]})
