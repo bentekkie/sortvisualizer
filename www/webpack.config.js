@@ -25,4 +25,7 @@ module.exports = {
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', '.wasm', '.css' ]
   },
+  devServer: {
+    disableHostCheck: true
+  }
 };

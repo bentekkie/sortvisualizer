@@ -1,13 +1,16 @@
 import * as React from 'react'
 import { Component } from 'react'
 import FlipMove from 'react-flip-move';
+import * as _ from "lodash";
 import { Container, Row, Col, Progress, Button, Form, Label, Input } from 'reactstrap';
 import { run_sort, delay, sorts } from './utils';
 import FormGroup from 'reactstrap/lib/FormGroup';
+import { Sorter } from './jsmodule';
 
 interface IState {
+    prevArray: number[],
     array: number[],
-    swap: [number, number],
+    swap: number[],
     sortType: sorts
     running: boolean,
     n: number,
@@ -17,8 +20,10 @@ interface IState {
 export class App extends Component<{}, IState>{
     constructor(props: Readonly<{}>) {
         super(props)
+        const array = shuffleArray([...range(1, 11)]);
         this.state = {
-            array: shuffleArray([...range(1, 11)]),
+            array,
+            prevArray: array,
             swap: [-1, -1],
             sortType: sorts.selection,
             running: false,
@@ -29,14 +34,12 @@ export class App extends Component<{}, IState>{
 
     sortList = () => {
         this.setState({ running: true }, async () => {
-            for (const { swap, array } of run_sort(this.state.array, this.state.sortType)) {
-                if(this.state.delay > 0 ){
-                    await delay(this.state.delay)
-                }
-                this.setState({ array, swap })
+            for(const {array,swap} of run_sort(this.state.array, this.state.sortType)){
                 if(!this.state.running) break;
+                this.setState(prev => {prevArray:prev.array,array,swap})
+                await delay(this.state.delay)
             }
-            this.setState({ swap: [-1, -1], running: false })
+            this.setState({running: false,swap:[-1,-1]})
         })
         
     }
@@ -172,7 +175,7 @@ export class App extends Component<{}, IState>{
                             <Col>
                                 <Progress
                                     style={{ height: `100%` }}
-                                    color={(this.state.swap.indexOf(i) >= 0)?(this.state.swap[0] === this.state.swap[1])?"success": "danger" : "info"}
+                                    color={(this.state.swap.indexOf(i) >= 0)?(_.isEqual(this.state.prevArray,this.state.array))?"success": "danger" : "info"}
                                     value={(100 * n * 1.0 / list.length)} />
                             </Col>
                         </Row>
