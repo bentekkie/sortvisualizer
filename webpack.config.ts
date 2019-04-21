@@ -15,7 +15,6 @@ const config : webpack.Configuration = {
     new CopyWebpackPlugin(['index.html','index.css']),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "crate"),
-      forceWatch: true,
     })
   ],
   module: {
