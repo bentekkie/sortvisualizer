@@ -4,6 +4,7 @@ use crate::SwappableVec;
 pub fn sort(arr: &mut SwappableVec){
     let len = arr.len();
     helper(arr,0,len);
+    arr.observe(len-1);
 }
 
 fn helper(arr: &mut SwappableVec, l : usize, u : usize){
