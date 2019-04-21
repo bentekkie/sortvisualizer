@@ -27,6 +27,7 @@ extern "C" {
 #[wasm_bindgen]
 pub fn sort(array : Vec<u32>, sort_type: String) -> Vec<u32>{
     let mut arr = SwappableVec::new(array);
+    
     let _result = match sort_type.as_ref() {
             "insertion" => Ok(insertion::sort(&mut arr)),
             "selection" => Ok(selection::sort(&mut arr)),

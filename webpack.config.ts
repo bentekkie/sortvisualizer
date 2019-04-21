@@ -1,7 +1,9 @@
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const path = require('path');
+import CopyWebpackPlugin from "copy-webpack-plugin";
+import WasmPackPlugin from  "@wasm-tool/wasm-pack-plugin";
+import * as path from "path";
+import webpack from "webpack";
 
-module.exports = {
+const config : webpack.Configuration = {
   entry: "./src/bootstrap.js",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -10,7 +12,11 @@ module.exports = {
   devtool: 'inline-source-map',
   mode: "development",
   plugins: [
-    new CopyWebpackPlugin(['index.html','index.css'])
+    new CopyWebpackPlugin(['index.html','index.css']),
+    new WasmPackPlugin({
+      crateDirectory: path.resolve(__dirname, "crate"),
+      forceWatch: true,
+    })
   ],
   module: {
     rules: [
@@ -29,3 +35,4 @@ module.exports = {
     disableHostCheck: true
   }
 };
+export default config;

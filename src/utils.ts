@@ -1,4 +1,4 @@
-import {sort,} from "sortvisualizer"
+import {sort,} from "../crate/pkg"
 
 export enum sorts{
     quick = "quick",
